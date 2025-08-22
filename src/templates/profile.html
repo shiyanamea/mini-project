@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Profile</h2>
+    <div class="text-center mb-3">
+        {% if user[6] %}
+            <img src="/static/profile_photos/{{ user[6] }}" alt="Profile Photo" class="profile-photo mb-2">
+        {% else %}
+            <img src="/static/images/avatar-01.jpg" alt="Profile Photo" class="profile-photo mb-2">
+        {% endif %}
+    </div>
+    <ul class="list-group mb-3">
+        <li class="list-group-item"><strong>First Name:</strong> {{ user[1] }}</li>
+        <li class="list-group-item"><strong>Last Name:</strong> {{ user[2] }}</li>
+        <li class="list-group-item"><strong>Contact:</strong> {{ user[3] }}</li>
+        <li class="list-group-item"><strong>Username:</strong> {{ user[4] }}</li>
+    </ul>
+    <a href="/profile/edit" class="btn btn-warning">Edit Profile</a>
+    <a href="/user_dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+</body>
+</html> 

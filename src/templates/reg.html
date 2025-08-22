@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MedBot - Register</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: none;
+        }
+
+        .btn-register {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .login-link p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .login-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border-right: none;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+        }
+
+        .input-group-text i {
+            color: #666;
+        }
+
+        .form-text {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .terms {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .terms a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .flash-messages {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .flash-error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            border: 1px solid #ffcccc;
+        }
+        .flash-success {
+            background-color: #e6ffe6;
+            color: #006600;
+            border: 1px solid #ccffcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="registration-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-messages flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="register-container">
+                <div class="register-header">
+                    <i class="fas fa-user-plus register-icon"></i>
+                    <h1>Create Account</h1>
+                    <p>Join MedBot for personalized medical assistance</p>
+                </div>
+                
+                <form action="/register1" method="POST">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="fname" id="fname" placeholder="First Name" required>
+                        </div>
+                        <small class="form-text text-danger" id="fname-error"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="lname" id="lname" placeholder="Last Name" required>
+                        </div>
+                        <small class="form-text text-danger" id="lname-error"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                            </div>
+                            <input type="tel" class="form-control" name="contacts" id="contacts" placeholder="Phone Number" required>
+                        </div>
+                        <small class="form-text text-danger" id="phone-error"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                        </div>
+                        <small class="form-text text-danger" id="username-error"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <small class="form-text text-muted">Password must be at least 8 characters long with letters, numbers, and special characters</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
+                        </div>
+                        <small class="form-text text-danger" id="password-match-message"></small>
+                    </div>
+                    
+                    <div class="terms">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="terms" required>
+                            <label class="custom-control-label" for="terms">
+                                I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-register">
+                        <i class="fas fa-user-plus mr-2"></i> Create Account
+                    </button>
+                </form>
+                
+                <div class="login-link">
+                    <p>Already have an account? <a href="/">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        // Form validation
+        const fname = document.getElementById('fname');
+        const lname = document.getElementById('lname');
+        const contacts = document.getElementById('contacts');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const passwordMatchMessage = document.getElementById('password-match-message');
+
+        // Validation functions
+        function validateName(name, element, errorElement) {
+            const nameRegex = /^[A-Za-z\s]{2,30}$/;
+            if (!nameRegex.test(name)) {
+                errorElement.textContent = 'Name should only contain letters and spaces (2-30 characters)';
+                return false;
+            }
+            errorElement.textContent = '';
+            return true;
+        }
+
+        function validatePhone(phone) {
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(phone)) {
+                document.getElementById('phone-error').textContent = 'Please enter a valid 10-digit phone number';
+                return false;
+            }
+            document.getElementById('phone-error').textContent = '';
+            return true;
+        }
+
+        function validateUsername(username) {
+            const usernameRegex = /^[A-Za-z0-9_]{3,25}$/;
+            if (!usernameRegex.test(username)) {
+                document.getElementById('username-error').textContent = 'Username should be 3-25 characters long and can only contain letters, numbers, and underscores';
+                return false;
+            }
+            document.getElementById('username-error').textContent = '';
+            return true;
+        }
+
+        function validatePassword() {
+            const passwordValue = password.value;
+            const confirmPasswordValue = confirmPassword.value;
+            
+            // Simplified password rules
+            const minLength = 8;
+            const hasLetter = /[A-Za-z]/.test(passwordValue);
+            const hasNumber = /\d/.test(passwordValue);
+            const hasSpecialChar = /[!@#$%^&*]/.test(passwordValue);
+            
+            let errorMessage = '';
+            
+            if (passwordValue.length < minLength) {
+                errorMessage += 'Password must be at least 8 characters long.<br>';
+            }
+            if (!hasLetter) {
+                errorMessage += 'Password must contain at least one letter.<br>';
+            }
+            if (!hasNumber) {
+                errorMessage += 'Password must contain at least one number.<br>';
+            }
+            if (!hasSpecialChar) {
+                errorMessage += 'Password must contain at least one special character (!@#$%^&*).<br>';
+            }
+            
+            if (passwordValue !== confirmPasswordValue) {
+                errorMessage += 'Passwords do not match!<br>';
+            }
+            
+            if (errorMessage) {
+                passwordMatchMessage.innerHTML = errorMessage;
+                return false;
+            } else {
+                passwordMatchMessage.innerHTML = '';
+                return true;
+            }
+        }
+
+        // Add event listeners for real-time validation
+        fname.addEventListener('input', () => validateName(fname.value, fname, document.getElementById('fname-error')));
+        lname.addEventListener('input', () => validateName(lname.value, lname, document.getElementById('lname-error')));
+        contacts.addEventListener('input', () => validatePhone(contacts.value));
+        username.addEventListener('input', () => validateUsername(username.value));
+        password.addEventListener('input', validatePassword);
+        confirmPassword.addEventListener('input', validatePassword);
+
+        // Form submission validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const isFnameValid = validateName(fname.value, fname, document.getElementById('fname-error'));
+            const isLnameValid = validateName(lname.value, lname, document.getElementById('lname-error'));
+            const isPhoneValid = validatePhone(contacts.value);
+            const isUsernameValid = validateUsername(username.value);
+            const isPasswordValid = validatePassword();
+
+            if (!isFnameValid || !isLnameValid || !isPhoneValid || !isUsernameValid || !isPasswordValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

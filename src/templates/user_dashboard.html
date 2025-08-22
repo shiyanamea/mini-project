@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+        .sidebar {
+            height: 100vh;
+            background: #343a40;
+            color: #fff;
+            padding-top: 30px;
+            position: fixed;
+            width: 220px;
+        }
+        .sidebar a {
+            color: #fff;
+            display: block;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #495057;
+            color: #ffc107;
+        }
+        .main-content {
+            margin-left: 240px;
+            padding: 40px 30px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        .todo-actions button {
+            margin-right: 5px;
+        }
+        .dashboard-title {
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+        .btn-chat {
+            background: #17a2b8;
+            color: #fff;
+            border-radius: 25px;
+            font-weight: 600;
+            padding: 10px 30px;
+            margin-top: 15px;
+        }
+        .btn-chat:hover {
+            background: #138496;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h3 class="text-center mb-4"><i class="fa fa-graduation-cap"></i> Student Portal</h3>
+    <a href="/user_dashboard" class="active"><i class="fa fa-dashboard"></i> Dashboard</a>
+    <a href="/profile/view"><i class="fa fa-user"></i> Profile</a>
+    <a href="http://localhost:8501" target="_blank"><i class="fa fa-comments"></i> Chat with PDF</a>
+    <a href="/"><i class="fa fa-sign-out"></i> Logout</a>
+</div>
+<div class="main-content">
+    <div class="dashboard-title">Welcome, {{ user[1] }} {{ user[2] }}</div>
+    <div class="row">
+        <!-- Profile Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card p-4 text-center">
+                {% if user[6] %}
+                    <img src="/static/images/avatar123.jpg" alt="User Photo" class="profile-photo">
+                {% else %}
+                    <img src="/static/images/avatar123.jpg" alt="User Photo" class="profile-photo">
+                {% endif %}
+                <h5 class="mt-2">{{ user[1] }} {{ user[2] }}</h5>
+                <p class="mb-1"><i class="fa fa-envelope"></i> {{ user[4] }}</p>
+                <p class="mb-1"><i class="fa fa-phone"></i> {{ user[3] }}</p>
+                <a href="/profile/edit" class="btn btn-warning btn-sm mt-2"><i class="fa fa-edit"></i> Edit Profile</a>
+            </div>
+        </div>
+        <!-- To-Do List Card -->
+        <div class="col-md-8 mb-4">
+            <div class="card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0"><i class="fa fa-tasks"></i> To-Do List</h4>
+                </div>
+                <form action="/todo/create" method="post" class="mb-3 d-flex align-items-center">
+                    <input type="text" name="title" placeholder="Title" required class="form-control mr-2" style="max-width: 180px;">
+                    <input type="text" name="description" placeholder="Description" class="form-control mr-2" style="max-width: 300px;">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                </form>
+                <ul class="list-group">
+                    {% for todo in todos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ todo[2] }}</strong> - {{ todo[3] }}<br>
+                            <span class="badge badge-{% if todo[4]=='completed' %}success{% else %}secondary{% endif %}">Status: {{ todo[4] }}</span>
+                        </div>
+                        <div class="todo-actions d-flex align-items-center">
+                            <form action="/todo/update/{{ todo[0] }}" method="post" class="d-flex align-items-center mr-2">
+                                <input type="text" name="title" value="{{ todo[2] }}" required class="form-control form-control-sm mr-1" style="width:90px;">
+                                <input type="text" name="description" value="{{ todo[3] }}" class="form-control form-control-sm mr-1" style="width:120px;">
+                                <select name="status" class="form-control form-control-sm mr-1">
+                                    <option value="pending" {% if todo[4]=='pending' %}selected{% endif %}>Pending</option>
+                                    <option value="completed" {% if todo[4]=='completed' %}selected{% endif %}>Completed</option>
+                                </select>
+                                <button type="submit" class="btn btn-success btn-sm" title="Update"><i class="fa fa-check"></i></button>
+                            </form>
+                            <form action="/todo/delete/{{ todo[0] }}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item text-center text-muted">No tasks yet. Add your first to-do!</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="text-right">
+                <a href="http://localhost:8501" target="_blank" class="btn btn-chat"><i class="fa fa-comments"></i> Chat with PDF</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MedBot - Login</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            margin-left: 0px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: none;
+        }
+
+        .btn-login {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .register-link p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .register-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border-right: none;
+        }
+
+        .input-group .form-control {
+            border-left: none;
+        }
+
+        .input-group-text i {
+            color: #666;
+        }
+
+        .flash-messages {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .flash-error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            border: 1px solid #ffcccc;
+        }
+        .flash-success {
+            background-color: #e6ffe6;
+            color: #006600;
+            border: 1px solid #ccffcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-messages flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="login-header">
+                <i class="fas fa-hospital-alt login-icon"></i>
+                <h1>Welcome Back</h1>
+                <p>Login to access your MedBot account</p>
+            </div>
+            
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" name="textfield" placeholder="Username" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </div>
+                        <input type="password" class="form-control" name="textfield2" placeholder="Password" required>
+                    </div>
+                    <div class="text-right mt-2">
+                        <a href="#" data-toggle="modal" data-target="#forgotPasswordModal">Forgot Password?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+            </form>
+            
+            <div class="register-link">
+                <p>Don't have an account? <a href="/register">Register now</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="resetPasswordForm" action="/reset_password" method="POST">
+                        <div class="form-group">
+                            <label for="resetUsername">Username</label>
+                            <input type="text" class="form-control" id="resetUsername" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="resetPhone">Phone Number</label>
+                            <input type="tel" class="form-control" id="resetPhone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" name="confirm_password" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" form="resetPasswordForm" class="btn btn-primary">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        // Password validation for reset form
+        const newPassword = document.getElementById('newPassword');
+        const confirmNewPassword = document.getElementById('confirmNewPassword');
+        
+        function validateResetPassword() {
+            const passwordValue = newPassword.value;
+            const confirmPasswordValue = confirmNewPassword.value;
+            
+            // Simplified password rules
+            const minLength = 8;
+            const hasLetter = /[A-Za-z]/.test(passwordValue);
+            const hasNumber = /\d/.test(passwordValue);
+            const hasSpecialChar = /[!@#$%^&*]/.test(passwordValue);
+            
+            if (passwordValue.length < minLength) {
+                alert('Password must be at least 8 characters long');
+                return false;
+            }
+            if (!hasLetter) {
+                alert('Password must contain at least one letter');
+                return false;
+            }
+            if (!hasNumber) {
+                alert('Password must contain at least one number');
+                return false;
+            }
+            if (!hasSpecialChar) {
+                alert('Password must contain at least one special character (!@#$%^&*)');
+                return false;
+            }
+            if (passwordValue !== confirmPasswordValue) {
+                alert('Passwords do not match!');
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(e) {
+            if (!validateResetPassword()) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

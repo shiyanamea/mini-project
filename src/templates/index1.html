@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            /* Add the background image URL and set other background properties */
+            background-image: url('../static/images/exxx.png'); /* Change 'your-background-image-url.jpg' to the URL of your background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background */
+            background-repeat: no-repeat; /* Do not repeat the background */
+        }
+        .container {
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an audio file for emotion detection</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="audio" accept=".wav"><br>
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">   
+   
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+     <!-- Site Metas -->
+    <title>MedBot - Your Medical Assistant</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="../static/images/apple-touch-icon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+    <!-- ALL VERSION CSS -->
+    <link rel="stylesheet" href="../static/css/versions.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="../static/css/responsive.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/custom.css">
+
+    <!-- Modernizer for Portfolio -->
+    <script src=".../static/js/modernizer.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: var(--primary-color) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: -50px auto 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success-color), var(--accent-color));
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 1rem 1.2rem;
+            border-radius: 15px;
+            margin: 0 0.8rem;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .bot .message-content {
+            background: white;
+            border: 1px solid #e9ecef;
+        }
+
+        .user .message-content {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .chat-input {
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 30px;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .chat-input button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .chat-input button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .medical-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .medical-info h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .medical-info p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 50vh;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .chat-container {
+                margin: -30px 1rem 2rem;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+
+</head>
+<body class="host_version"> 
+
+	<!-- Modal -->
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header tit-up">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Customerggrg Login</h4>
+			</div>
+			<div class="modal-body customer-box">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+					<li><a class="active" href="login#overviews" data-toggle="tab">Login</a></li>
+					<li><a href="#Registration" data-toggle="tab">Registration</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane active" id="Login">
+						<form role="form" class="form-horizontal">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" id="email1" placeholder="Name" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" id="exampleInputPassword1" placeholder="Email" type="email">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-light btn-radius btn-brd grd1">
+										Submit
+									</button>
+									<a class="for-pwd" href="javascript:;">Forgot your password?</a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane" id="Registration">
+						<form role="form" class="form-horizontal">
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" placeholder="Name" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" id="email" placeholder="Email" type="email">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" id="mobile" placeholder="Mobile" type="email">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" id="password" placeholder="Password" type="password">
+								</div>
+							</div>
+							<div class="row">							
+								<div class="col-sm-10">
+									<button type="button" class="btn btn-light btn-radius btn-brd grd1">
+										Save &amp; Continue
+									</button>
+									<button type="button" class="btn btn-light btn-radius btn-brd grd1">
+										Cancel</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+
+    <!-- LOADER -->
+	<div id="preloader">
+		<div class="loader-container">
+			<div class="progress-br float shadow">
+				<div class="progress__item"></div>
+			</div>
+		</div>
+	</div>
+	<!-- END LOADER -->	
+	
+	<!-- Start header -->
+	<header class="top-navbar">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="index.html">
+					<img src="../static/images/download2.jpg" alt="" width="100" height="100"/>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbars-host">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#overviews" >LOGIN</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register" >REgister</a></li>
+                    </ul>    
+
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- End header -->
+	
+	<div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel" data-pause="hover" data-interval="false" >
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+			<li data-target="#carouselExampleControls" data-slide-to="1"></li>
+			<li data-target="#carouselExampleControls" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner" role="listbox">
+			<div class="carousel-item active">
+				<div id="home" class="first-section" style="background-image:url('../static/images/first.jpg');">
+					<div class="dtab">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 text-right">
+									<div class="big-tagline">
+										<h2><strong>LET'S GO EVERY WHERE </strong>  </h2>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</div>
+								</div>
+							</div><!-- end row -->            
+						</div><!-- end container -->
+					</div>
+				</div><!-- end section -->
+			</div>
+			<div class="carousel-item">
+				<div id="home" class="first-section" style="background-image:url('../static/images/sec.jpg');">
+					<div class="dtab">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 text-left">
+									<div class="big-tagline">
+										<h2 data-animation="animated zoomInRight">LET'S GO EVERY WHERE <strong></strong></h2>
+
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<!--<a href="#" class="hover-btn-new"><span>Read More</span></a>-->
+									</div>
+								</div>
+							</div><!-- end row -->            
+						</div><!-- end container -->
+					</div>
+				</div><!-- end section -->
+			</div>
+			<div class="carousel-item">
+				<div id="home" class="first-section" style="background-image:url('../static/images/third.jpg');">
+					<div class="dtab">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 text-center">
+									<div class="big-tagline">
+										<h2 data-animation="animated zoomInRight">LET'S GO EVERY WHERE <strong></strong></h2>
+
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</div>
+								</div>
+							</div><!-- end row -->            
+						</div><!-- end container -->
+					</div>
+				</div><!-- end section -->
+			</div>
+			<!-- Left Control -->
+			<a class="new-effect carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+				<span class="fa fa-angle-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+
+			<!-- Right Control -->
+			<a class="new-effect carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+				<span class="fa fa-angle-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+	
+    <div id="overviews" class="section wb">
+        <div class="container">
+            <div class="section-title row text-center">
+                <div class="col-md-8 offset-md-2">
+					<br>
+										<br>
+					<br>
+
+{% block body %}{% endblock %}          					<br>
+					<br>
+      </div>
+            </div><!-- end title -->
+        
+            <!--<div class="row align-items-center">-->
+                <!--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">-->
+                    <!--<div class="message-box">-->
+                        <!--<h4>2018 BEST SmartEDU education school</h4>-->
+                        <!--<h2>Welcome to SmartEDU education school</h2>-->
+                        <!--<p>Quisque eget nisl id nulla sagittis auctor quis id. Aliquam quis vehicula enim, non aliquam risus. Sed a tellus quis mi rhoncus dignissim.</p>-->
+
+                        <!--<p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis montes, nascetur ridiculus mus. Sed vitae rutrum neque. </p>-->
+
+                        <!--<a href="#" class="hover-btn-new orange"><span>Learn More</span></a>-->
+                    <!--</div>&lt;!&ndash; end messagebox &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+				<!---->
+				<!--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">-->
+                    <!--<div class="post-media wow fadeIn">-->
+                        <!--<img src="../static/images/about_02.jpg" alt="" class="img-fluid img-rounded">-->
+                    <!--</div>&lt;!&ndash; end media &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+			<!--</div>-->
+			<!--<div class="row align-items-center">-->
+				<!--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">-->
+                    <!--<div class="post-media wow fadeIn">-->
+                        <!--<img src="../static/images/about_03.jpg" alt="" class="img-fluid img-rounded">-->
+                    <!--</div>&lt;!&ndash; end media &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+				<!---->
+				<!--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">-->
+                    <!--<div class="message-box">-->
+                        <!--<h2>The standard Lorem Ipsum passage, used since the 1500s</h2>-->
+                        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>-->
+
+                        <!--<p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum.</p>-->
+
+                        <!--<a href="#" class="hover-btn-new orange"><span>Learn More</span></a>-->
+                    <!--</div>&lt;!&ndash; end messagebox &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+				<!---->
+            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; end container &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; end section &ndash;&gt;-->
+
+    <!--<section class="section lb page-section">-->
+		<!--<div class="container">-->
+			 <!--<div class="section-title row text-center">-->
+                <!--<div class="col-md-8 offset-md-2">-->
+                    <!--<h3>Our history</h3>-->
+                    <!--<p class="lead">Lorem Ipsum dolroin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem!</p>-->
+                <!--</div>-->
+            <!--</div>&lt;!&ndash; end title &ndash;&gt;-->
+			<!--<div class="timeline">-->
+				<!--<div class="timeline__wrap">-->
+					<!--<div class="timeline__items">-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-01">-->
+								<!--<h2>2018</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-02">-->
+								<!--<h2>2015</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-03">-->
+								<!--<h2>2014</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-04">-->
+								<!--<h2>2012</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-01">-->
+								<!--<h2>2010</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-02">-->
+								<!--<h2>2007</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-03">-->
+								<!--<h2>2004</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="timeline__item">-->
+							<!--<div class="timeline__content img-bg-04">-->
+								<!--<h2>2002</h2>-->
+								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim neque condimentum lacus dapibus. Lorem-->
+									<!--ipsum dolor sit amet, consectetur adipiscing elit.</p>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</section>-->
+
+	<!--<div class="section cl">-->
+		<!--<div class="container">-->
+			<!--<div class="row text-left stat-wrap">-->
+				<!--<div class="col-md-4 col-sm-4 col-xs-12">-->
+					<!--<span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-study"></i></span>-->
+					<!--<p class="stat_count">12000</p>-->
+					<!--<h3>Students</h3>-->
+				<!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+
+				<!--<div class="col-md-4 col-sm-4 col-xs-12">-->
+					<!--<span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-online"></i></span>-->
+					<!--<p class="stat_count">240</p>-->
+					<!--<h3>Courses</h3>-->
+				<!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+
+				<!--<div class="col-md-4 col-sm-4 col-xs-12">-->
+					<!--<span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i class="flaticon-years"></i></span>-->
+					<!--<p class="stat_count">55</p>-->
+					<!--<h3>Years Completed</h3>-->
+				<!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+			<!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+		<!--</div>&lt;!&ndash; end container &ndash;&gt;-->
+	<!--</div>&lt;!&ndash; end section &ndash;&gt;-->
+
+    <!--<div id="plan" class="section lb">-->
+        <!--<div class="container">-->
+            <!--<div class="section-title text-center">-->
+                <!--<h3>Choose Your Plan</h3>-->
+                <!--<p>Lorem ipsum dolor sit aet, consectetur adipisicing lit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>-->
+            <!--</div>&lt;!&ndash; end title &ndash;&gt;-->
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-6 offset-md-3">-->
+                    <!--<div class="message-box">-->
+                        <!--<ul class="nav nav-pills nav-stacked" id="myTabs">-->
+                            <!--<li><a class="active" href="#tab1" data-toggle="pill">Monthly Subscription</a></li>-->
+                            <!--<li><a href="#tab2" data-toggle="pill">Yearly Subscription</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+            <!--</div>-->
+
+            <!--<hr class="invis">-->
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                    <!--<div class="tab-content">-->
+                        <!--<div class="tab-pane active fade show" id="tab1">-->
+                            <!--<div class="row text-center">-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$45</h2>-->
+                                            <!--<h3>per month</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>250</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>125GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>140</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>60</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$59</h2>-->
+                                            <!--<h3>per month</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>150</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>65GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>60</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>30</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$85</h2>-->
+                                            <!--<h3>per month</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>250</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>125GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>140</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>60</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+                        <!--</div>&lt;!&ndash; end pane &ndash;&gt;-->
+
+                        <!--<div class="tab-pane fade" id="tab2">-->
+                            <!--<div class="row text-center">-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$477</h2>-->
+                                            <!--<h3>Year</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>250</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>125GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>140</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>60</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$485</h2>-->
+                                            <!--<h3>Year</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>150</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>65GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>60</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>30</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="pricing-table pricing-table-highlighted">-->
+                                        <!--<div class="pricing-table-header grd1">-->
+                                            <!--<h2>$500</h2>-->
+                                            <!--<h3>Year</h3>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-space"></div>-->
+                                        <!--<div class="pricing-table-features">-->
+                                            <!--<p><i class="fa fa-envelope-o"></i> <strong>250</strong> Email Addresses</p>-->
+                                            <!--<p><i class="fa fa-rocket"></i> <strong>125GB</strong> of Storage</p>-->
+                                            <!--<p><i class="fa fa-database"></i> <strong>140</strong> Databases</p>-->
+                                            <!--<p><i class="fa fa-link"></i> <strong>60</strong> Domains</p>-->
+                                            <!--<p><i class="fa fa-life-ring"></i> <strong>24/7 Unlimited</strong> Support</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="pricing-table-sign-up">-->
+                                            <!--<a href="#" class="hover-btn-new orange"><span>Order Now</span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+                        <!--</div>&lt;!&ndash; end pane &ndash;&gt;-->
+                    <!--</div>&lt;!&ndash; end content &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; end container &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; end section &ndash;&gt;-->
+
+    <!--<div id="testimonials" class="parallax section db parallax-off" style="background-image:url('images/parallax_04.jpg');">-->
+        <!--<div class="container">-->
+            <!--<div class="section-title text-center">-->
+                <!--<h3>Testimonials</h3>-->
+                <!--<p>Lorem ipsum dolor sit aet, consectetur adipisicing lit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>-->
+            <!--</div>&lt;!&ndash; end title &ndash;&gt;-->
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-12 col-sm-12">-->
+                    <!--<div class="testi-carousel owl-carousel owl-theme">-->
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_01.png" alt="" class="img-fluid">-->
+                                <!--<h4>James Fernando </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>-->
+                                <!--<p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; end testimonial &ndash;&gt;-->
+
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_02.png" alt="" class="img-fluid">-->
+                                <!--<h4>Jacques Philips </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>-->
+                                <!--<p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; end testimonial &ndash;&gt;-->
+
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_03.png" alt="" class="img-fluid ">-->
+                                <!--<h4>Venanda Mercy </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>-->
+                                <!--<p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; end testimonial &ndash;&gt;-->
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_01.png" alt="" class="img-fluid">-->
+                                <!--<h4>James Fernando </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>-->
+                                <!--<p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; end testimonial &ndash;&gt;-->
+
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_02.png" alt="" class="img-fluid">-->
+                                <!--<h4>Jacques Philips </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>-->
+                                <!--<p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; end testimonial &ndash;&gt;-->
+
+                        <!--<div class="testimonial clearfix">-->
+							<!--<div class="testi-meta">-->
+                                <!--<img src="../static/images/testi_03.png" alt="" class="img-fluid">-->
+                                <!--<h4>Venanda Mercy </h4>-->
+                            <!--</div>-->
+                            <!--<div class="desc">-->
+                                <!--<h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>-->
+                                <!--<p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; end testi-meta &ndash;&gt;-->
+                        <!--</div>&lt;!&ndash; end testimonial &ndash;&gt;-->
+                    <!--</div>&lt;!&ndash; end carousel &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; end container &ndash;&gt;-->
+    <!--</div>&lt;!&ndash; end section &ndash;&gt;-->
+
+    <!--<div class="parallax section dbcolor">-->
+        <!--<div class="container">-->
+            <!--<div class="row logos">-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_01.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_02.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_03.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_04.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_05.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">-->
+                    <!--<a href="#"><img src="../static/images/logo_06.png" alt="" class="img-repsonsive"></a>-->
+                <!--</div>-->
+            <!--</div>&lt;!&ndash; end row &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; end container &ndash;&gt;-->
+    </div><!-- end section -->
+
+    <footer class="footer">
+        <div class="container">
+            <!--<div class="row">-->
+                <!--<div class="col-lg-4 col-md-4 col-xs-12">-->
+                    <!--<div class="widget clearfix">-->
+                        <!--<div class="widget-title">-->
+                            <!--<h3>About US</h3>-->
+                        <!--</div>-->
+                        <!--<p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis montes.</p>   -->
+						<!--<div class="footer-right">-->
+							<!--<ul class="footer-links-soi">-->
+								<!--<li><a href="#"><i class="fa fa-facebook"></i></a></li>-->
+								<!--<li><a href="#"><i class="fa fa-github"></i></a></li>-->
+								<!--<li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+								<!--<li><a href="#"><i class="fa fa-dribbble"></i></a></li>-->
+								<!--<li><a href="#"><i class="fa fa-pinterest"></i></a></li>-->
+							<!--</ul>&lt;!&ndash; end links &ndash;&gt;-->
+						</div>						
+                    </div><!-- end clearfix -->
+                </div><!-- end col -->
+
+				<div class="col-lg-4 col-md-4 col-xs-12">
+                    <!--<div class="widget clearfix">-->
+                        <!--<div class="widget-title">-->
+                            <!--<h3>Information Link</h3>-->
+                        <!--</div>-->
+                        <!--<ul class="footer-links">-->
+                            <!--<li><a href="#">Home</a></li>-->
+                            <!--<li><a href="#">Blog</a></li>-->
+                            <!--<li><a href="#">Pricing</a></li>-->
+							<!--<li><a href="#">About</a></li>-->
+							<!--<li><a href="#">Contact</a></li>-->
+                        <!--</ul>&lt;!&ndash; end links &ndash;&gt;-->
+                    <!--</div>&lt;!&ndash; end clearfix &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; end col &ndash;&gt;-->
+				<!---->
+                <!--<div class="col-lg-4 col-md-4 col-xs-12">-->
+                    <!--<div class="widget clearfix">-->
+                        <!--<div class="widget-title">-->
+                            <!--<h3>Contact Details</h3>-->
+                        <!--</div>-->
+
+                        <!--<ul class="footer-links">-->
+                            <!--<li><a href="mailto:#">info@yoursite.com</a></li>-->
+                            <!--<li><a href="#">www.yoursite.com</a></li>-->
+                            <!--<li>PO Box 16122 Collins Street West Victoria 8007 Australia</li>-->
+                            <!--<li>+61 3 8376 6284</li>-->
+                        <!--</ul>&lt;!&ndash; end links &ndash;&gt;-->
+                    </div><!-- end clearfix -->
+                </div><!-- end col -->
+				
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </footer><!-- end footer -->
+
+    <div class="copyrights">
+        <div class="container">
+            <div class="footer-distributed">
+                <div class="footer-center">                   
+                    <p class="footer-company-name">All Rights Reserved. &copy; 2018 <a href="#">SmartEDU</a> Design By : <a href="https://html.design/">html design</a></p>
+                </div>
+            </div>
+        </div><!-- end container -->
+    </div><!-- end copyrights -->
+
+    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+
+    <!-- ALL JS FILES -->
+    <script src="../static/js/all.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="../static/js/custom.js"></script>
+	<script src="../static/js/timeline.min.js"></script>
+	<script>
+		timeline(document.querySelectorAll('.timeline'), {
+			forceVerticalMode: 700,
+			mode: 'horizontal',
+			verticalStartPosition: 'left',
+			visibleItems: 4
+		});
+	</script>
+</body>
+</html>

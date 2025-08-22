@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <style>
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Edit Profile</h2>
+    <form action="/profile/edit" method="post" enctype="multipart/form-data">
+        <div class="form-group mb-2 text-center">
+            <label>Profile Photo</label><br>
+            {% if user[6] %}
+                <img src="/static/profile_photos/{{ user[6] }}" alt="Profile Photo" class="profile-photo mb-2">
+            {% else %}
+                <img src="/static/images/avatar123.jpg" alt="Profile Photo" class="profile-photo mb-2">
+            {% endif %}
+            <input type="file" class="form-control-file mt-2" id="photo" name="photo" accept="image/*">
+        </div>
+        <div class="form-group mb-2">
+            <label for="fname">First Name</label>
+            <input type="text" class="form-control" id="fname" name="fname" value="{{ user[1] }}" required>
+        </div>
+        <div class="form-group mb-2">
+            <label for="lname">Last Name</label>
+            <input type="text" class="form-control" id="lname" name="lname" value="{{ user[2] }}" required>
+        </div>
+        <div class="form-group mb-2">
+            <label for="contacts">Contact</label>
+            <input type="text" class="form-control" id="contacts" name="contacts" value="{{ user[3] }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="/user_dashboard" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html> 
