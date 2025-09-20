@@ -36,7 +36,7 @@ def login():
             con = get_db_connection()
             cmd = con.cursor()
             
-            # Protect against SQL injection using parameterized queries
+            # Protect against SQL injection using parameterized queries.
             cmd.execute("SELECT * FROM login WHERE username=%s AND password=%s", (username, password))
             s = cmd.fetchone()
 
