@@ -6,7 +6,7 @@ import joblib
 import os
 from werkzeug.utils import secure_filename
 
-# Initialize Flask app
+# Initialize Flask app.
 app = Flask(__name__)
 app.secret_key = "qwer"
 
