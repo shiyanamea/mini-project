@@ -107,7 +107,7 @@ def register1():
                 con = get_db_connection()
                 cmd = con.cursor()
 
-                # Check if username already exists
+                # Check if username already exists.
                 cmd.execute("SELECT * FROM login WHERE username=%s", (usn,))
                 if cmd.fetchone():
                     flash("Username already exists", "error")
